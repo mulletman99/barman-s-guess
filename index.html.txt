@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Barman's Guess</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #f4f4f4; }
+        #game { margin: 50px auto; padding: 20px; background: #fff; border-radius: 10px; width: 80%; }
+        button { padding: 10px 20px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background: #45a049; }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <h1>Barman's Guess</h1>
+        <p>Guess how many pints I can pour in a minute (1–50):</p>
+        <input type="number" id="guess" min="1" max="50">
+        <button onclick="checkGuess()">Pour It!</button>
+        <p id="result"></p>
+        <p>Score: <span id="score">0</span></p>
+    </div>
+
+    <script>
+        let target = Math.floor(Math.random() * 50) + 1;
+        let score = 0;
+
+        function checkGuess() {
+            let guess = parseInt(document.getElementById("guess").value);
+            let result = document.getElementById("result");
+
+            if (!guess || guess < 1 || guess > 50) {
+                result.textContent = "Enter a number between 1 and 50, mate!";
+                return;
+            }
+
+            if (guess === target) {
+                score += 10;
+                result.textContent = "Spot on! New round starting...";
+                target = Math.floor(Math.random() * 50) + 1;
+            } else if (guess < target) {
+                result.textContent = "Too low! Try again.";
+                score--;
+            } else {
+                result.textContent = "Too high! Try again.";
+                score--;
+            }
+
+            document.getElementById("score").textContent = score;
+        }
+    </script>
+</body>
+</html>
